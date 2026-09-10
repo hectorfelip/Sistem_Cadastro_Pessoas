@@ -14,7 +14,7 @@ public class App {
                 e.printStackTrace();
                         }
             try {
-                Pessoa pessoa2 = new Pessoa("Peter","04195358108","Teste@email.com","62912341234");
+                Pessoa pessoa2 = new Pessoa("Peter","52998224725","Teste@email.com","62912341234");
                 listaPessoas.add(pessoa2);
                 System.out.println("ok");
             } catch (Exception e) {
@@ -24,7 +24,7 @@ public class App {
 
             try {
                 Pessoa tst = new Pessoa();
-                System.out.println(tst.verificarCpf("04195358108"));
+                System.out.println(tst.verificarCpf("52998224725"));
                 System.out.println("ok");
             } catch (Exception e) {
                 System.out.println("Erro ao cadastrar cpf valido!");
@@ -32,7 +32,7 @@ public class App {
             }
             try {
                 Pessoa tst = new Pessoa();
-                System.out.println(tst.verificarCpf("04195358118"));
+                System.out.println(tst.verificarCpf("52998224725"));
                 System.out.println("ok");
             } catch (Exception e) {
                 System.out.println("Erro ao cadastrar cpf valido!");
@@ -57,7 +57,7 @@ public class App {
             }
 
             try {
-                Pessoa a = new Pessoa("null", "04195358108", "null@text.com", "62912341234");
+                Pessoa a = new Pessoa("null", "52998224725", "null@text.com", "62912341234");
                 a.showdata();
                 a.setCpfvalido(a.getCpf());
                 a.showdata(a.getCpfValido());
