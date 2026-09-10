@@ -1,4 +1,4 @@
-package programacao.sistema_Cadastro_Pessoas;
+import java.nio.channels.Pipe.SourceChannel;
 
 public class Pessoa {
     private  int id;
@@ -7,6 +7,8 @@ public class Pessoa {
     private  String email;
     private  String telefone;
     private boolean cpfvalido;
+
+    int[] cpfNum = new int[9];
 
     public  Pessoa(){}
 
@@ -24,7 +26,7 @@ public class Pessoa {
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
-        this.cpfvalido = cpfvalido;
+        this.cpfvalido = true;
     }
 
     public boolean verificarCpf(String cpf){
@@ -34,39 +36,45 @@ public class Pessoa {
 
         int sum = 0;
         int d1,d2;
-        int[] cpfNum = new int[9];
+        
         int[] num = {10,9,8,7,6,5,4,3,2};
         // calculo dv
         // coleta os numeros do cpf um por um e separa cada um em uma lista.
-        for (int i = 0; i <= cpf.length()-2; i++) {
+        for (int i = 0; i < 9; i++) {
             char k = cpf.charAt(i);
             cpfNum[i] = k - '0';
+            // System.out.println(cpfNum[i]);
         }
         // calculo bruto!
-        for(int i = 0; i <= cpfNum.length; i++){
+        for(int i = 0; i < cpfNum.length; i++){
             sum += cpfNum[i] * num[i];
         }
 
         int resto = sum%11;
         d1 = 11 - resto;
+        if(resto == 0 || resto == 1){
+            d1 = 0;
+        }
+        
         sum = 0;
 
         //calculo segundo dv
         // coleta os numeros do cpf um por um e separa cada um em uma lista.
-        for (int i = 0; i <= cpf.length()-2; i++) {
-            if(cpf.length() == 7){
-                cpfNum[i] = cpfNum[i+1];
-            }else{
-                cpfNum[8] = d1;
-            }
+        for (int i = 0; i < 8; i++) {
+            cpfNum[i] = cpfNum[i+1];
         }
+        cpfNum[8] = d1;
         // calculo bruto!
-        for(int i = 0; i <= cpfNum.length; i++){
+        for(int i = 0; i < 9; i++){
             sum += cpfNum[i] * num[i];
+            // System.out.println(sum);
         }
 
         int resto2 = sum%11;
         d2 = 11 - resto2;
+        if(resto2 == 0 || resto2 ==1){
+            d2 = 0;
+        }
 
         if(a != d1 || b != d2){
             // System.out.println("O cpf é invalido!");
@@ -94,14 +102,16 @@ public class Pessoa {
     }
     // getters e setters
     public void setCpf(String cpf) {
-        if(cpf.trim().isEmpty()){
+        String cpf1 = cpf.replaceAll("\\D", ""); 
+
+        if(cpf1.trim().isEmpty()){
             System.out.println("O cpf não pode estar vazio!");
-        }else if(cpf.matches("[\\d{3}].[\\d{3}].[\\d{3}]-[\\d{2}] || [\\d{1,11}]")){
+        }else if(cpf1.matches("[\\d{3}].[\\d{3}].[\\d{3}]-[\\d{2}] || [\\d{1,11}]")){
             System.out.println("O cpf não segue o modelo correto!");
-        }else if(!verificarCpf(cpf)){
+        }else if(!verificarCpf(cpf1)){
             System.out.println("CPF invalido!");
         }else{
-            this.cpf = cpf;
+            this.cpf = cpf1;
         }
     }
     public void setEmail(String email) {
@@ -121,7 +131,11 @@ public class Pessoa {
         }
     }
     public void setNome(String nome) {
-        if(nome.trim().isEmpty()){
+        if(nome == null){
+            System.out.println("Nome null");
+        }
+
+        else if(nome.trim().isEmpty()){
             System.out.println("Nome vazio!");
         }else if(nome.matches("(\\d+) && (\\W+) && (\\S+)")){
             System.out.println("O nome não deve conter números ou caracteres especiais!");
