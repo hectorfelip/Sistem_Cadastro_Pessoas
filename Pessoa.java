@@ -6,6 +6,7 @@ public class Pessoa {
     private  String cpf;
     private  String email;
     private  String telefone;
+    private boolean cpfvalido;
 
     public  Pessoa(){}
 
@@ -17,15 +18,16 @@ public class Pessoa {
     }
 
 
-    public Pessoa(int id, String nome, String cpf, String email, String telefone){
+    public Pessoa(int id, String nome, String cpf, String email, String telefone,boolean cpfvalido){
         this.telefone = telefone;
         this.id = id;
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
+        this.cpfvalido = cpfvalido;
     }
 
-    private boolean verificarCpf(String cpf){
+    public boolean verificarCpf(String cpf){
         int a,b;
         a = cpf.charAt(9) - '0';
         b = cpf.charAt(10) - '0';
@@ -77,7 +79,19 @@ public class Pessoa {
         
         
     }    
-
+    public void showdata(){
+        System.out.println(nome);
+        System.out.println(cpf);
+        System.out.println(email);
+        System.out.println(telefone);
+    }
+    public void showdata(boolean cpfValido){
+        System.out.println(nome);
+        System.out.println(cpf);
+        System.out.println(email);
+        System.out.println(telefone);
+        System.out.println(cpfvalido);
+    }
     // getters e setters
     public void setCpf(String cpf) {
         if(cpf.trim().isEmpty()){
@@ -115,6 +129,16 @@ public class Pessoa {
             this.nome = nome;
         }
     }
+    public void setCpfvalido(String cpf) {
+        if(verificarCpf(cpf)){
+            this.cpfvalido = true;
+            setCpf(cpf);
+            
+        }else{
+            System.out.println("Cpf Invalido!");
+            this.cpfvalido = false;
+        }
+    }
     public void setTelefone(String telefone) {
         if(telefone.trim().isEmpty()){
             System.out.println("O numero de telefone não pode estar vazio!");
@@ -138,6 +162,9 @@ public class Pessoa {
     }
     public String getTelefone() {
         return telefone;
+    }
+    public boolean getCpfValido(){
+        return cpfvalido;
     }
     
 }
